@@ -150,19 +150,27 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     @IBAction func search(_ sender: Any) {
         
-        searchText = searchCategoryTextField.text!
+        
+            searchText = searchCategoryTextField.text!
+           
+            
+            taskArray = try! Realm().objects(Task.self).filter("category = '" + self.searchText + "'")
+        
+            tableView.reloadData()
+            
        
-        
-        taskArray = try! Realm().objects(Task.self).filter("category = '" + self.searchText + "'")
-    
-        tableView.reloadData()
-        
       
         
         
     }
     
     
+    @IBAction func backButton(_ sender: Any) {
+        
+        taskArray = try! Realm().objects(Task.self).sorted(byKeyPath: "date", ascending: true)
+        
+        tableView.reloadData()
+    }
     
     
 }
